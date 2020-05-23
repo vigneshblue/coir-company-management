@@ -1,12 +1,12 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
-
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
-// Set ENV
-// process.env.NODE_ENV = 'production'
+var knex = require('./db/knex');
 
+// Set ENV
+// process.env.NODE_ENV = 'production
 let mainWindow;
 
 // Listen for app to ready

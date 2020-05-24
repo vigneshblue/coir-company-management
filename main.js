@@ -1,98 +1,88 @@
-const electron = require('electron');
-const url = require('url');
-const path = require('path');
-const { app, BrowserWindow, Menu, ipcMain, dialog } = electron;
-
-var knex = require('./db/knex');
+const electron = require('electron')
+const glob = require('glob')
+const url = require('url')
+const path = require('path')
+const { app, BrowserWindow, ipcMain, dialog } = electron
 
 // Set ENV
-// process.env.NODE_ENV = 'production
+// process.env.NODE_ENV = 'production'
 let loginWindow;
 let mainWindow;
+let salesBillWindow;
 
-// Listen for app to ready
-app.on('ready', () => {
-  createLoginWindow();
-  // Build menu from template
-  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-  // Insert Menu
-  Menu.setApplicationMenu(mainMenu);
+function initialize () {
+  makeSingleInstance()
 
-});
+  loadMainProcessFiles()
 
-// Create Login Window
-function createLoginWindow() {
-  loginWindow = new BrowserWindow({
-    webPreferences: {
-      nodeIntegration: true
-    },
-    width: 500,
-    height: 300,
-    frame: false
-  });
-  loginWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'views','loginWindow.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
-  //  Garbage collection handle
-  loginWindow.on('close', function(){
-    loginWindow = null;
-  });
-}
+  function createLoginWindow() {
+    loginWindow = new BrowserWindow({
+      webPreferences: {
+        nodeIntegration: true
+      },
+      width: 500,
+      height: 300,
+      frame: false
+    });
+    loginWindow.loadURL(url.format({
+      pathname: path.join(__dirname, 'views','loginWindow.html'),
+      protocol: 'file:',
+      slashes: true
+    }));
+    //  Garbage collection handle
+    loginWindow.on('closed', function(){
+      loginWindow = null;
+    });
+  }
 
-ipcMain.on('login:validate', (e, login) => {
-  knex('super_users').where({username: login['username'], password: login['password']})
-  .then((users) => {
-    if (users === undefined || users.length == 0) {
-      dialog.showErrorBox('Login Failed', 'Please check the login credentials!');
-    } else {
-      createMainWindow();
-      loginWindow.close();      
+  app.on('ready', () => {
+    createLoginWindow()
+  })
+
+  app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+      app.quit()
     }
   })
-});
 
-// Create Main Window
-function createMainWindow() {
-  // Create a new window
-  mainWindow = new BrowserWindow({
-    webPreferences: {
-      nodeIntegration: true
+  app.on('activate', () => {
+    if (loginWindow === null) {
+      createLoginWindow()
     }
-  });
-
-  // Load HTML into window
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'views', 'mainWindow.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
-
-  // Quit app when closed
-  mainWindow.on('closed', () => {
-    app.quit();
-  });
-}
-
-// Create menu template
-const mainMenuTemplate = [];
-
-// Add developer tools item if not in prod
-if(process.env.NODE_ENV !== 'production'){
-  mainMenuTemplate.push({
-    label: 'Developer Tools',
-    submenu:[
-    {
-      label: 'Toggle Dev Tools',
-      accelerator: process.platform == 'darwin' ? 'Command+I' : 'Ctrl+I',
-      click(item, focusedWindow){
-      focusedWindow.toggleDevTools();
-      }
-    },
-    {
-      role: 'reload'
-    }
-    ]
   })
 }
+
+// Make this app a single instance app.
+//
+// The main window will be restored and focused instead of a second window
+// opened when a person attempts to launch a second instance.
+//
+// Returns true if the current version of the app should quit instead of
+// launching.
+
+function makeSingleInstance () {
+  if (process.mas) return
+
+  app.requestSingleInstanceLock()
+
+  app.on('second-instance', () => {
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+}
+
+// Require each JS file in the main-process dir
+function loadMainProcessFiles () {
+  const files = glob.sync(path.join(__dirname, 'main-process/*.js'))
+  files.forEach((file) => { require(file) })
+}
+
+initialize()
+
+
+
+
+
+

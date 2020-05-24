@@ -1,0 +1,88 @@
+<template class="task-template">
+  <section id="sales-bill-section" class="section js-section"></section>
+    <div class='container'>
+      <div class='row'>
+        <div class="col-md-4">
+          <h1> Sales Bill </h1>
+          <button id='sbw-create'>Create</button>
+          <button id='sbw-update'>Update</button>
+          <button id='sbw-show'>Show</button>
+
+          <div id='sbw-create-section' style='display: none;'>
+            <form id='sales-bill-entry'>
+              <div class='form-group'>
+                <label for='item_name'>Item Name</label>
+                <input name='item_name', id='item_name', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='batch_no'>Batch Name</label>
+                <input name='batch_no', id='batch_no', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='unit'>Unit</label>
+                <input name='unit', id='unit', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='rate'>Rate</label>
+                <input name='rate', id='rate', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='quantity'>Quantity</label>
+                <input name='quantity', id='quantity', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='amount'>Amount</label>
+                <input name='amount', id='amount', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='taxation'>Taxation</label>
+                <input name='taxation', id='taxation', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='igst_amount'>IGST Amount</label>
+                <input name='igst_amount', id='igst_amount', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='tax_amount'>Tax Amount</label>
+                <input name='tax_amount', id='tax_amount', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <label for='total_amount'>Total Amount</label>
+                <input name='total_amount', id='total_amount', type='text', class='form-control'>
+              </div>
+
+              <div class='form-group'>
+                <button id='sales-bill-create', type='submit', class='btn btn-primary'>Add</button>
+              </div>
+
+            </form>
+          </div>
+
+          <div id='sbw-update-section'>
+            
+          </div>
+
+          <div id='sbw-show-section'>
+            
+          </div>
+        </div>
+        <div class="col-md-8">
+          <table class="table" id="sales-bill-table">
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+<script type="text/javascript">
+  require('./renderer-process/sales-bill')
+</script>

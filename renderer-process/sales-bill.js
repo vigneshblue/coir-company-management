@@ -20,21 +20,27 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-const createForm = document.querySelector('#sales-bill-entry');
-createForm.addEventListener('submit', (e) => {
-  e.preventDefault();
-  let formData = $('form').serializeArray().reduce(function(obj, item) {
-      obj[item.name] = item.value;
-      return obj;
-  }, {});
-  ipcRenderer.send('sales-bill-create', formData);
+document.addEventListener("DOMContentLoaded", function() {
+  const createForm = document.querySelector('#sales-bill-entry');
+  createForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    let formData = $('form').serializeArray().reduce(function(obj, item) {
+        obj[item.name] = item.value;
+        return obj;
+    }, {});
+    ipcRenderer.send('sales-bill-create', formData);
+  });
+
+  document.querySelector('#sbw-create').addEventListener('click', () => { openSections('create') });
 });
+
+
 
 ipcRenderer.on('create:success', (e, msg) => {
   alert(msg);
 });
 
-document.querySelector('#sbw-create').addEventListener('click', () => { openSections('create') });
+
 
 function openSections(section) {      
   switch(section) {

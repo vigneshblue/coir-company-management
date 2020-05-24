@@ -8,7 +8,7 @@ ipcMain.on('sales-bill-create', (e, formData) => {
     e.sender.send('create:success', "Succesfully saved data!");
   });
   knex.select().table('sales_bill').then((results) => {
-    salesBillWindow.webContents.send('sales-bills', results);
+    mainWindow.webContents.send('sales-bills', results);
   });
 });
 

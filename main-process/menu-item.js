@@ -1,12 +1,7 @@
-const {Menu} = require('electron')
+const {app, Menu} = require('electron')
 
 // Create menu template
 const mainMenuTemplate = [];
-// Build menu from template
-const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
-// Insert Menu
-Menu.setApplicationMenu(mainMenu);
-
 
 // Add developer tools item if not in prod
 if(process.env.NODE_ENV !== 'production'){
@@ -29,3 +24,10 @@ if(process.env.NODE_ENV !== 'production'){
     ]
   })
 }
+
+app.on('ready', () => {
+  // Build menu from template
+  const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
+  // Insert Menu
+  Menu.setApplicationMenu(mainMenu);
+});

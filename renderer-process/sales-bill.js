@@ -6,7 +6,8 @@ document.addEventListener("DOMContentLoaded", function() {
   ipcRenderer.on("sales-bills", function(e, results) {
     let resultEl = document.getElementById("sales-bill-table");
     resultEl.innerHTML = '';
-    resultEl.innerHTML = "<tr><th>Id</th><th>Item Name</th><th>Batch No</th><th>Unit</th><th>Rate</th><th>Quantity</th></tr>";
+    resultEl.innerHTML = "<thead class='thead-dark'><tr><th>Id</th><th>Item Name</th><th>Batch No</th><th>Unit</th><th>Rate</th><th>Quantity</th>"+
+                          "<th>Amount</th><th>Taxation</th><th>IGST</th><th>Tax Amount</th><th>Total Amount</th></tr></thead>";
     console.log(results);
     for(var i = 0; i < results.length; i++) {
       let content = "<td>" + results[i].id.toString() + "</td>";
@@ -15,6 +16,11 @@ document.addEventListener("DOMContentLoaded", function() {
       content += "<td>"+ results[i].unit.toString() + "</td>";
       content += "<td>"+ results[i].rate.toString() + "</td>";
       content += "<td>"+ results[i].quantity.toString() + "</td>";
+      content += "<td>"+ results[i].amount.toString() + "</td>";
+      content += "<td>"+ results[i].taxation.toString() + "</td>";
+      content += "<td>"+ results[i].igst_amount.toString() + "</td>";
+      content += "<td>"+ results[i].tax_amount.toString() + "</td>";
+      content += "<td>"+ results[i].total_amount.toString() + "</td>";
       resultEl.innerHTML += "<tr>" + content + "<tr>";          
     }
   });
@@ -37,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 ipcRenderer.on('create:success', (e, msg) => {
-  alert(msg);
+  $.notify(msg, { type: 'success' });
 });
 
 

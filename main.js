@@ -6,9 +6,8 @@ const { app, BrowserWindow, ipcMain, dialog } = electron
 
 // Set ENV
 // process.env.NODE_ENV = 'production'
-let loginWindow;
-let mainWindow;
-let salesBillWindow;
+let loginWindow = null;
+let mainWindow = null;
 
 function initialize () {
   makeSingleInstance()

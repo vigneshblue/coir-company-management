@@ -4,7 +4,19 @@ const database = {
   development: {
     client: 'sqlite3',
     connection: {
-      filename: '/home/vigneshwaran/workspace/personal/coir-company-management/db/development.sqlite'
+      filename: 'development.sqlite'
+    },
+    migrations: {
+      directory: __dirname + '/db/migrations'
+    },
+    seeds: {
+      directory: __dirname + '/db/seeds'
+    }
+  },
+  production: {
+    client: 'sqlite3',
+    connection: {
+      filename: 'production.sqlite'
     },
     migrations: {
       directory: __dirname + '/db/migrations'

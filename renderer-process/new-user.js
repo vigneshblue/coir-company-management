@@ -38,7 +38,7 @@ ipcRenderer.on('user-edit-data', (e, user) => {
 });
 
 ipcRenderer.on('user-form-company-dropdown', (e, results) => {
-  let resultEl = document.getElementById('company');
+  let resultEl = document.getElementById('company_id');
   resultEl.innerHTML = '';
   resultEl.innerHTML = "<option value=''>Select Company</option>";
   for(var i = 0; i < results.length; i++) {

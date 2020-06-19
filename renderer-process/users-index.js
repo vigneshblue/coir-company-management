@@ -27,9 +27,9 @@ document.addEventListener("DOMContentLoaded", function() {
       content += "<td>"+ results[i].bank_account_no.toString() + "</td>";
       content += "<td>"+ results[i].bank_branch_name.toString() + "</td>";
       content += "<td>"+ results[i].bank_ifsc_code.toString() + "</td>";
-      resultEl.innerHTML += "<tr class='table-index-record' data-id="+results[i].id+">" + content + "<tr>";          
+      resultEl.innerHTML += "<tr class='user-table-index-record' data-id="+results[i].id+">" + content + "<tr>";          
     }
-    document.querySelectorAll('.table-index-record').forEach( record => {
+    document.querySelectorAll('.user-table-index-record').forEach( record => {
       record.addEventListener('click', event => {
         var userId = event.target.closest('tr').dataset.id;
         ipcRenderer.send('user-edit', userId);

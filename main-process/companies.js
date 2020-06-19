@@ -14,7 +14,6 @@ ipcMain.on('open-new-company', (e) => {
 ipcMain.on('company-edit', (e, cid) => {
   companyId = cid;
   createNewCompanyWindow();
-
 });
 
 function createNewCompanyWindow() {

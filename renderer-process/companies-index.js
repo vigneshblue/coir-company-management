@@ -2,8 +2,7 @@ const electron = require('electron');
 const {ipcRenderer} = electron;
 
 document.addEventListener("DOMContentLoaded", function() {
-  document.querySelector('#ciw-new-company').addEventListener('click', () => { ipcRenderer.send('open-new-company'); });
-  
+  document.querySelector('#ciw-new-company').addEventListener('click', () => { ipcRenderer.send('open-new-company'); });  
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -23,9 +22,9 @@ document.addEventListener("DOMContentLoaded", function() {
       content += "<td>"+ results[i].bank_account_no.toString() + "</td>";
       content += "<td>"+ results[i].bank_branch_name.toString() + "</td>";
       content += "<td>"+ results[i].bank_ifsc_code.toString() + "</td>";
-      resultEl.innerHTML += "<tr class='table-index-record' data-id="+results[i].id+">" + content + "<tr>";          
+      resultEl.innerHTML += "<tr class='company-table-index-record' data-id="+results[i].id+">" + content + "<tr>";          
     }
-    document.querySelectorAll('.table-index-record').forEach( record => {
+    document.querySelectorAll('.company-table-index-record').forEach( record => {
       record.addEventListener('click', event => {
         var companyId = event.target.closest('tr').dataset.id;
         ipcRenderer.send('company-edit', companyId);

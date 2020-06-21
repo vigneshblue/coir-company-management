@@ -1,0 +1,19 @@
+<template class="task-template">
+  <section id="products-index-section" class="section js-section">
+    <div class='container'>
+      <div class='row'>
+        <div class='col-md-10'>
+          <h2 class='page-title'> Products </h2>
+        </div>
+        <div class='col-md-2'>
+          <button style="float:right;" class="btn btn-info open-win-btn" id='piw-new-product'>New Product</button>
+        </div>
+        <table class="table table-bordered table-hover" id="products-index-table">
+        </table>
+      </div>
+    </div>
+  </section>
+</template>
+<script type="text/javascript">
+  require('./renderer-process/products-index')
+</script>

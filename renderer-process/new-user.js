@@ -50,3 +50,19 @@ ipcRenderer.on('create:success', (e, msg) => {
   form.reset();
   $.notify(msg, { type: 'success' });
 });
+
+// Page actions
+document.getElementById('company_id').addEventListener('change', e => {
+  let bankInputs = document.querySelectorAll('#new-user-bank-details > div > div > input')
+  if(e.target.selectedIndex > 0) {
+    disableElements(bankInputs, true);
+  } else {
+    disableElements(bankInputs, false);
+  }
+});
+
+function disableElements(elements, disable) {
+  for(let element of elements) {
+    element.disabled = disable;
+  }
+}
